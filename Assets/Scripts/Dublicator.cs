@@ -2,13 +2,12 @@ using UnityEngine;
 
 public class Dublicator : MonoBehaviour
 {
-    public float DublicationChance;
-
+    [SerializeField] private float _dublicationChance;
     [SerializeField] private float _explosionRadius;
     [SerializeField] private float _explosionForce;
     [SerializeField] private float _dublicantScaleRate;
     [SerializeField] private float _dublicantDublicationChanceRate;
-    [SerializeField] private GameObject _prefab;
+    [SerializeField] private Dublicator _prefab;
     [SerializeField] private GameObject _explosionPrefab;
 
     private int _minDublicantAmount = 2;
@@ -23,7 +22,7 @@ public class Dublicator : MonoBehaviour
 
     public void OnClick()
     {
-        if (Random.Range(0.0f, 1.0f) <= DublicationChance)
+        if (Random.Range(0.0f, 1.0f) <= _dublicationChance)
         {
             Dublicate();
         }
@@ -32,15 +31,25 @@ public class Dublicator : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void SetScale(Vector3 scale)
+    {
+        transform.localScale = scale;
+    }
+
+    public void SetDublicationChance(float dublicationChance)
+    {
+        _dublicationChance = dublicationChance;
+    }
+
     private void Dublicate()
     {
         int amount = Random.Range(_minDublicantAmount, _maxDublicantAmount + 1);
 
         for (int i = 0; i < amount; i++)
         {
-            GameObject dublicant = Instantiate(_prefab, transform.position, Quaternion.identity);
-            dublicant.transform.localScale = transform.localScale * _dublicantScaleRate;
-            dublicant.GetComponent<Dublicator>().DublicationChance = DublicationChance * _dublicantDublicationChanceRate;
+            Dublicator dublicant = Instantiate(_prefab, transform.position, Quaternion.identity);
+            dublicant.SetScale(transform.localScale * _dublicantScaleRate);
+            dublicant.SetDublicationChance(_dublicationChance * _dublicantDublicationChanceRate);
         }
     }
 

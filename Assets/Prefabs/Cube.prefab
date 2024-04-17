@@ -146,10 +146,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 482a8e9de75e9684fba0b7b6cffcd118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DublicationChance: 1
+  _dublicationChance: 1
   _explosionRadius: 3
   _explosionForce: 10
   _dublicantScaleRate: 0.5
   _dublicantDublicationChanceRate: 0.5
-  _prefab: {fileID: 7076274842704563335}
+  _prefab: {fileID: 1653582484147100168}
   _explosionPrefab: {fileID: 74078499623404262, guid: 9790383d97594f049aecba8cf470e3b7, type: 3}
