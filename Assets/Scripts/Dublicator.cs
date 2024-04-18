@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Dublicator : MonoBehaviour
 {
     [SerializeField] private float _dublicationChance;
@@ -13,6 +15,12 @@ public class Dublicator : MonoBehaviour
     private int _minDublicantAmount = 2;
     private int _maxDublicantAmount = 6;
     private MeshRenderer _meshRenderer;
+    private List<Dublicator> _dublicants;
+
+    private void Awake()
+    {
+        _dublicants = new List<Dublicator>();
+    }
 
     private void Start()
     {
@@ -50,6 +58,7 @@ public class Dublicator : MonoBehaviour
             Dublicator dublicant = Instantiate(_prefab, transform.position, Quaternion.identity);
             dublicant.SetScale(transform.localScale * _dublicantScaleRate);
             dublicant.SetDublicationChance(_dublicationChance * _dublicantDublicationChanceRate);
+            _dublicants.Add(dublicant);
         }
     }
 
@@ -59,13 +68,11 @@ public class Dublicator : MonoBehaviour
         explosion.transform.localScale = transform.localScale;
         Destroy(explosion, 1);
 
-        Collider[] hits = Physics.OverlapSphere(transform.position, _explosionRadius);
-
-        foreach (Collider hit in hits)
+        foreach (Dublicator dublicant in _dublicants)
         {
-            if (hit.attachedRigidbody != null)
+            if (dublicant.TryGetComponent(out Rigidbody rigidbody))
             {
-                hit.attachedRigidbody.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
+                rigidbody.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
             }
         }
     }
