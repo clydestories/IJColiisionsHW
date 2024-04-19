@@ -148,7 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dublicationChance: 1
   _explosionRadius: 3
-  _explosionForce: 10
+  _explosionForce: 500
   _dublicantScaleRate: 0.5
   _dublicantDublicationChanceRate: 0.5
   _prefab: {fileID: 1653582484147100168}
