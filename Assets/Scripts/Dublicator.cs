@@ -23,6 +23,12 @@ public class Dublicator : MonoBehaviour
         _explosionRadius /= transform.localScale.x;
     }
 
+    public void Init(Vector3 scale, float dublicationChance)
+    {
+        SetScale(scale);
+        SetDublicationChance(dublicationChance);
+    }
+
     public void OnClick()
     {
         if (Random.Range(0.0f, 1.0f) <= _dublicationChance)
@@ -55,8 +61,7 @@ public class Dublicator : MonoBehaviour
         for (int i = 0; i < amount; i++)
         {
             Dublicator dublicant = Instantiate(_prefab, transform.position, Quaternion.identity);
-            dublicant.SetScale(transform.localScale * _dublicantScaleRate);
-            dublicant.SetDublicationChance(_dublicationChance * _dublicantDublicationChanceRate);
+            dublicant.Init(transform.localScale * _dublicantScaleRate, _dublicationChance * _dublicantDublicationChanceRate);
         }
     }
 
